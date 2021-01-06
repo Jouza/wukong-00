@@ -35,16 +35,18 @@ input.onButtonPressed(Button.B, function () {
     wuKong.setServoAngel(wuKong.ServoList.S1, servoS1angle)
 })
 radio.onReceivedValue(function (name, value) {
-    if (name == "servoS0angle") {
+    if (name == "servoS0a") {
         servoS0angle = Math.min(180, Math.max(0, value))
-    } else if (name == "servoS1angle") {
+        wuKong.setServoAngel(wuKong.ServoList.S0, servoS0angle)
+    } else if (name == "servoS1a") {
         servoS1angle = Math.min(180, Math.max(0, value))
+        wuKong.setServoAngel(wuKong.ServoList.S1, servoS1angle)
     } else if (name == "stopAll") {
         wuKong.stopAllMotor()
         wuKong.setServoAngel(wuKong.ServoList.S0, 90)
         wuKong.setServoAngel(wuKong.ServoList.S1, 90)
     } else {
-    	
+        basic.showString(name)
     }
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
