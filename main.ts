@@ -6,15 +6,6 @@ input.onButtonPressed(Button.A, function () {
         . # . # .
         . # . # .
         `)
-    servoS0angle += -30
-    if (servoS0angle < 0) {
-        servoS0angle = 180
-    } else if (servoS0angle > 180) {
-        servoS0angle = 0
-    } else {
-    	
-    }
-    wuKong.setServoAngel(wuKong.ServoList.S0, servoS0angle)
 })
 input.onButtonPressed(Button.B, function () {
     basic.showLeds(`
@@ -24,15 +15,6 @@ input.onButtonPressed(Button.B, function () {
         . # . # .
         . # # . .
         `)
-    servoS1angle += 30
-    if (servoS1angle < 0) {
-        servoS1angle = 180
-    } else if (servoS1angle > 180) {
-        servoS1angle = 0
-    } else {
-    	
-    }
-    wuKong.setServoAngel(wuKong.ServoList.S1, servoS1angle)
 })
 radio.onReceivedValue(function (name, value) {
     if (name == "servoS0a") {
@@ -74,7 +56,24 @@ basic.showLeds(`
     . # # # .
     `)
 radio.setGroup(86)
-wuKong.setLightMode(wuKong.LightMode.OFF)
+wuKong.setLightMode(wuKong.LightMode.BREATH)
 strip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
 servoS0angle = 90
 servoS1angle = 90
+let startProcessFinnished = 0
+strip.setPixelColor(0, neopixel.colors(NeoPixelColors.Blue))
+strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Orange))
+strip.setPixelColor(2, neopixel.colors(NeoPixelColors.Green))
+strip.setPixelColor(3, neopixel.colors(NeoPixelColors.Red))
+strip.show()
+basic.forever(function () {
+    if (0 == startProcessFinnished && 3000 < input.runningTime()) {
+        wuKong.setLightMode(wuKong.LightMode.OFF)
+        strip.clear()
+        strip.show()
+        startProcessFinnished = 1
+    }
+    strip.rotate(1)
+    strip.show()
+    control.waitMicros(200000)
+})
