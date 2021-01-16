@@ -119,15 +119,14 @@ basic.forever(function () {
                 `)
         }
     }
-    servoS0S1diff = servoS0angle - servoS1angle
-    if (servoS0S1diff > 5) {
-        strip.setPixelColor(0, neopixel.colors(NeoPixelColors.Orange))
-        strip.show()
-    } else if (servoS0S1diff < 5) {
-        strip.setPixelColor(3, neopixel.colors(NeoPixelColors.Orange))
-        strip.show()
-    } else {
+    if (1 == startProcessFinnished) {
+        servoS0S1diff = 180 - servoS0angle - servoS1angle
         strip.clear()
+        if (servoS0S1diff > 5) {
+            strip.setPixelColor(1, neopixel.colors(NeoPixelColors.Orange))
+        } else if (servoS0S1diff < -5) {
+            strip.setPixelColor(0, neopixel.colors(NeoPixelColors.Orange))
+        }
         strip.show()
     }
     control.waitMicros(200000)
