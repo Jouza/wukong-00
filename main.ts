@@ -25,8 +25,10 @@ radio.onReceivedValue(function (name, value) {
         wuKong.setServoAngel(wuKong.ServoList.S1, servoS1angle)
     } else if (name == "stopAll") {
         wuKong.stopAllMotor()
-        wuKong.setServoAngel(wuKong.ServoList.S0, 90)
-        wuKong.setServoAngel(wuKong.ServoList.S1, 90)
+        servoS0angle = 90
+        servoS0S1diff = 90
+        wuKong.setServoAngel(wuKong.ServoList.S0, servoS0angle)
+        wuKong.setServoAngel(wuKong.ServoList.S1, servoS0angle)
     } else if (name == "display") {
         if (value == 1) {
             basic.showLeds(`
@@ -65,8 +67,8 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     strip.clear()
     strip.show()
 })
-let servoS0S1diff = 0
 let startProcessFinnished = 0
+let servoS0S1diff = 0
 let servoS1angle = 0
 let servoS0angle = 0
 let strip: neopixel.Strip = null
